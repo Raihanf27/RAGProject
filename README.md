@@ -38,6 +38,7 @@ Proyek ini merupakan implementasi **RAG (Retrieval-Augmented Generation)** yang 
 ## ⚙️ Instalasi & Konfigurasi
 
 **1. Jalankan Backend:**
+
 cd backend
 python -m venv venv
 source venv/bin/activate       # Windows: venv\Scripts\activate
