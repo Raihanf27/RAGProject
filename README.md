@@ -37,7 +37,7 @@ Proyek ini merupakan implementasi **RAG (Retrieval-Augmented Generation)** yang 
 
 ## ⚙️ Instalasi & Konfigurasi
 
-**### 1. Jalankan Backend:**
+**1. Jalankan Backend:**
 cd backend
 python -m venv venv
 source venv/bin/activate       # Windows: venv\Scripts\activate
@@ -48,11 +48,11 @@ GOOGLE_API_KEY=masukkan_api_key_gemini_anda
 MODEL_NAME=gemini-1.5-pro
 EMBEDDING_MODEL=text-embedding-004
 
-**3. Jalankan API:**
+**Jalankan API:**
 python app.py
 
 
-**### 2. Jalankan Frontend:**
+**2. Jalankan Frontend:**
 cd rag-client
 npm install
 npm start
