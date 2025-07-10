@@ -30,3 +30,42 @@ Proyek ini merupakan implementasi **RAG (Retrieval-Augmented Generation)** yang 
 │ │ └── RAGForm.jsx
 │ └── package.json
 └── README.md # Dokumentasi proyek
+
+
+
+---
+
+## ⚙️ Instalasi & Konfigurasi
+
+**### 1. Jalankan Backend:**
+```bash
+cd backend
+python -m venv venv
+source venv/bin/activate       # Windows: venv\Scripts\activate
+pip install -r requirements.txt
+
+**Buat file .env:**
+GOOGLE_API_KEY=masukkan_api_key_gemini_anda
+MODEL_NAME=gemini-1.5-pro
+EMBEDDING_MODEL=text-embedding-004
+
+**3. Jalankan API:**
+python app.py
+
+
+**### 2. Jalankan Frontend:**
+
+cd rag-client
+npm install
+npm start
+
+Frontend akan berjalan di: http://localhost:3000
+Backend Flask berjalan di: http://localhost:5000
+
+🔍 Contoh Pertanyaan
+Setelah PDF dimuat dan chatbot siap:
+
+- Apa isi Bab 1 dari skripsi ini?
+- Apa tujuan dari penelitian ini?
+- Metode apa yang digunakan dalam penelitian?
+- Siapa dosen pembimbing dalam dokumen ini?
