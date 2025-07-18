@@ -17,6 +17,7 @@ Proyek ini merupakan implementasi **RAG (Retrieval-Augmented Generation)** yang 
 ---
 
 ## 🗂️ Struktur Proyek
+``bash
 ├── backend/ # Backend Flask API + Langchain + Gemini
 │ ├── app.py # API utama
 │ ├── rag_engine.py # Komponen RAG (loader, splitter, embedding, vectorstore)
@@ -30,8 +31,7 @@ Proyek ini merupakan implementasi **RAG (Retrieval-Augmented Generation)** yang 
 │ │ └── RAGForm.jsx
 │ └── package.json
 └── README.md # Dokumentasi proyek
-
-
+``
 
 ---
 
