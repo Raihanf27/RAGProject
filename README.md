@@ -17,7 +17,7 @@ Proyek ini merupakan implementasi **RAG (Retrieval-Augmented Generation)** yang 
 ---
 
 ## 🗂️ Struktur Proyek
-``bash
+``
 ├── backend/ # Backend Flask API + Langchain + Gemini
 │ ├── app.py # API utama
 │ ├── rag_engine.py # Komponen RAG (loader, splitter, embedding, vectorstore)
@@ -39,18 +39,18 @@ Proyek ini merupakan implementasi **RAG (Retrieval-Augmented Generation)** yang 
 
 **1. Jalankan Backend:**
 
-cd backend
+``cd backend
 python -m venv venv
 source venv/bin/activate       # Windows: venv\Scripts\activate
 pip install -r requirements.txt
-
+``
 **Buat file .env:**
 GOOGLE_API_KEY=masukkan_api_key_gemini_anda
 MODEL_NAME=gemini-1.5-pro
 EMBEDDING_MODEL=text-embedding-004
 
 **Jalankan API:**
-python app.py
+``python main.py``
 
 
 **2. Jalankan Frontend:**
