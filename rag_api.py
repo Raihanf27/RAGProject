@@ -16,7 +16,7 @@ app = Flask(__name__)
 CORS(app)
 
 # --- Konfigurasi API Key Google Gemini ---
-API_KEY = "AIzaSyCOhqXVgPe6IaM6J8U4ltHINsJ8Z-hjJdk"  # Ganti jika pakai env
+API_KEY = ""  # Ganti jika pakai env
 genai.configure(api_key=API_KEY)
 
 # --- Fungsi pembersih teks dari PDF ---
