@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import google.generativeai as genai
 import os
+import re
 
 from langchain_community.document_loaders import PyPDFLoader
 from langchain.text_splitter import CharacterTextSplitter
@@ -15,24 +16,40 @@ app = Flask(__name__)
 CORS(app)
 
 # --- Konfigurasi API Key Google Gemini ---
-API_KEY = ""
+API_KEY = "AIzaSyCOhqXVgPe6IaM6J8U4ltHINsJ8Z-hjJdk"  # Ganti jika pakai env
 genai.configure(api_key=API_KEY)
 
+# --- Fungsi pembersih teks dari PDF ---
+def clean_text(text):
+    text = text.replace('\n', ' ')  # Hapus newline
+    text = re.sub(r'\s+', ' ', text)  # Hilangkan spasi ganda
+    return text.strip()
+
 # --- Load dan proses PDF ---
-print("Loading PDF dan membuat vectorstore...")
+print("📄 Loading PDF dan membuat vectorstore...")
 
-loader = PyPDFLoader("file.pdf")
-docs = loader.load()
+try:
+    loader = PyPDFLoader("file.pdf")
+    docs = loader.load()
 
-splitter = CharacterTextSplitter(chunk_size=500, chunk_overlap=50)
-texts = splitter.split_documents(docs)
+    # Bersihkan setiap halaman
+    for doc in docs:
+        doc.page_content = clean_text(doc.page_content)
 
-embedding = SentenceTransformerEmbeddings(model_name="all-MiniLM-L6-v2")
-vectorstore = FAISS.from_documents(texts, embedding)
+    splitter = CharacterTextSplitter(chunk_size=500, chunk_overlap=50)
+    texts = splitter.split_documents(docs)
 
-# --- Inisialisasi LLM & QA Chain ---
-llm = ChatGoogleGenerativeAI(model="gemini-2.5-pro", google_api_key=API_KEY)
-qa_chain = RetrievalQA.from_chain_type(llm=llm, retriever=vectorstore.as_retriever())
+    embedding = SentenceTransformerEmbeddings(model_name="all-MiniLM-L6-v2")
+    vectorstore = FAISS.from_documents(texts, embedding)
+
+    # --- Inisialisasi LLM & QA Chain ---
+    llm = ChatGoogleGenerativeAI(model="gemini-2.5-pro", google_api_key=API_KEY)
+    qa_chain = RetrievalQA.from_chain_type(llm=llm, retriever=vectorstore.as_retriever())
+
+except Exception as e:
+    print(f"❌ Error saat memuat PDF atau membuat vectorstore: {e}")
+    vectorstore = None
+    qa_chain = None
 
 # --- Route API ---
 @app.route("/ask", methods=["POST"])
@@ -43,6 +60,9 @@ def ask():
     if not question:
         return jsonify({"error": "Pertanyaan tidak boleh kosong."}), 400
 
+    if qa_chain is None:
+        return jsonify({"error": "Vectorstore tidak tersedia."}), 500
+
     try:
         answer = qa_chain.run(question)
         return jsonify({"question": question, "answer": answer})
@@ -51,4 +71,5 @@ def ask():
 
 # --- Run app ---
 if __name__ == "__main__":
+    print("🚀 RAG Flask API running on http://localhost:5000")
     app.run(debug=True)
