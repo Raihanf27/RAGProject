@@ -52,7 +52,7 @@ EMBEDDING_MODEL=text-embedding-004
 
 **Jalankan API:**
 ```bash 
-python main.py
+python rag_api.py
 ```
 
 **2. Jalankan Frontend:**
